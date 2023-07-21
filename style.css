@@ -76,6 +76,11 @@ body {
   font-size: 2rem;
   line-height: 0rem;
   margin-top: 10px;
+  transition: box-shadow .3s;
+}
+
+.weight:hover {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .reps {
