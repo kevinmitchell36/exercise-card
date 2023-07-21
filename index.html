@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <script src="https://kit.fontawesome.com/3ffbf38ede.js" crossorigin="anonymous"></script>
   <title>All exercises</title>
 </head>
 <body>
@@ -11,20 +14,22 @@
    </nav>
    <main>
     <section class="search">
-      <p>search bar</p>
+      <input type="text" id="search-bar" placeholder="" >
+      <i class="fa-solid fa-magnifying-glass icon"></i>
     </section>
     <section class="add-button">
       <button id="add-item">
-        clicky clicky
+        Add Exercise
       </button>
+      <div id="form" class="modal">
+        <i class="fa-solid fa-xmark" id="close"></i>
+        <div class="form-content">
+          
+        </div>
+      </div>
     </section>
     <section class="filters">
-      <ul class="list filters">
-        <li id="movement">name</li>
-        <li id="split">Split</li>
-      </ul class="list multi-filters">
-        <li id="targets">Targets</li>
-      </ul>
+      <p></p>
     </section>
     <section class="all-exercises">
       <div class="card">
@@ -44,5 +49,6 @@
       </div>
     </section>
    </main>
+   <script src="script.js"></script>
 </body>
 </html>
