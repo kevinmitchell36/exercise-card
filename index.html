@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3ffbf38ede.js" crossorigin="anonymous"></script>
   <title>All exercises</title>
 </head>
@@ -12,42 +14,82 @@
    <nav>
     <h1>exciting nav bar</h1>
    </nav>
-   <main>
+   <main class="container">
     <section class="search">
-      <input type="text" id="search-bar" placeholder="" >
-      <i class="fa-solid fa-magnifying-glass icon"></i>
+      <input type="text" id="search-bar" placeholder="Search" >
     </section>
     <section class="add-button">
       <button id="add-item">
         Add Exercise
       </button>
       <div id="form" class="modal">
-        <i class="fa-solid fa-xmark" id="close"></i>
         <div class="form-content">
-          
+          <i class="fa-solid fa-xmark" id="close"></i>
+          <div class="form-field">
+            <label for="movement">Name</label>
+            <input type="text" name="name" id="movement">
+          </div>
+          <div class="form-field">
+            <label for="split">Split</label>
+            <input type="text" name="split" id="split">
+          </div>
+          <div class="form-field">
+            <label for="targets">Targets</label>
+            <input type="text" name="targets" id="targets">
+          </div>
+          <div class="form-field">
+            <label for="weight">Weight</label>
+            <input type="text" name="weight" id="weight">
+          </div>
+          <div class="form-field">
+            <label for="reps">Reps</label>
+            <input type="text" name="reps" id="reps">
+          </div>
+          <div class="form-field">
+            <label for="notes">Notes</label>
+            <textarea name="notes" id="notes" rows="5"></textarea>
+          </div>
+          <div class="form-btns">
+            <button>Add Exercise</button>
+            <button id="close">Cancel</button>
+          </div>
         </div>
       </div>
     </section>
     <section class="filters">
       <p></p>
     </section>
-    <section class="all-exercises">
+    <div class="all-exercises">
       <div class="card">
-        <p>Text</p>
-        <p>Text</p>
-        <p>Text</p>
+        <ul class="titles">
+          <li class="column-title">Name</li>
+          <li class="column-title">Splits</li>
+          <li class="column-title">Targets</li>
+          <li class="column-title">Delete</li>
+        </ul>
       </div>
       <div class="card">
-        <p>Text</p>
-        <p>Text</p>
-        <p>Text</p>
+        <ul class="exercise">
+          <li>Bench Pec Flys</li>
+          <li>Upper/Push</li>
+          <li>Pecs, front delts, biceps</li>
+          <li>
+            <i class="fa-regular fa-trash-can"></i>
+          </li>
+        </ul>
       </div>
       <div class="card">
-        <p>Text</p>
-        <p>Text</p>
-        <p>Text</p>
+        <ul class="exercise">
+          <li>Bench Pec Flys</li>
+          <li>Upper/Push</li>
+          <li>Pecs, front delts, biceps</li>
+          <li>
+            <i class="fa-regular fa-trash-can"></i>
+          </li>
+        </ul>
       </div>
-    </section>
+      
+    </div>
    </main>
    <script src="script.js"></script>
 </body>

@@ -1,28 +1,34 @@
-main {
- display: flex;
- align-items: center;
- justify-content: space-between;
- flex-direction: column;
- border: 4px solid blue;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1.8rem;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 section {
   margin: 10px;
 }
-.search {
+
+#search-bar {
   border: 2px solid black;
+  border-radius: 10px;
   position: relative;
-}
-
-input { 
-  border: 3px solid red;
-  border-radius: 30px;
-}
-
-.icon {
-  position: absolute;
-  left: 5px;
-  top: calc(50% - 0.40em);
+  padding: 5px;
+  width: 450px;
 }
 
 .modal {
@@ -39,24 +45,29 @@ input {
 } 
 
 .form-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  background-color: rgba(245, 245, 245, 0.868);
+  margin: 30px auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  max-width: 400px; /* Could be more or less, depending on screen size */
+  /* color: #333; */
+
 }
 
-
-ul {
-  list-style-type: none;
-  border: 2px dashed green;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.form-field {
+  margin-top: 15px;
 }
 
-li {
-  margin: auto;
+.form-field label {
+  display: block;
+}
+
+.form-field input, textarea {
+  width: 100%;
+  padding: 5px;
+  border: #929191 2px solid;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 
 .filters {
@@ -65,5 +76,32 @@ li {
 
 .all-exercises {
   display: flex;
+  flex-direction: column;
+  background-color: rgb(248, 243, 235);
+  padding: 20px 5px;
+}
+
+
+.all-exercises .card {
+  background-color: white;
+  border-bottom: 1px solid #cfcece
+}
+
+.exercise, .titles {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.exercise ul {
+  margin-bottom: 0px;
+}
+
+.exercise li {
+  margin-right: 10px;
+}
+
+li:last-child {
+  margin-left: 15px;
 }
 
