@@ -74,7 +74,7 @@ section {
   display: flex;
 }
 
-.all-exercises {
+#all-exercises {
   display: flex;
   flex-direction: column;
   background-color: rgb(248, 243, 235);
@@ -82,7 +82,7 @@ section {
 }
 
 
-.all-exercises .card {
+#all-exercises .card {
   background-color: white;
   border-bottom: 1px solid #cfcece
 }

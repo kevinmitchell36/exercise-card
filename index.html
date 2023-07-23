@@ -22,7 +22,7 @@
       <button id="add-item">
         Add Exercise
       </button>
-      <div id="form" class="modal">
+      <form id="form" class="modal">
         <div class="form-content">
           <i class="fa-solid fa-xmark" id="close"></i>
           <div class="form-field">
@@ -30,7 +30,7 @@
             <input type="text" name="name" id="movement">
           </div>
           <div class="form-field">
-            <label for="split">Split</label>
+            <label for="split">Splits</label>
             <input type="text" name="split" id="split">
           </div>
           <div class="form-field">
@@ -50,16 +50,16 @@
             <textarea name="notes" id="notes" rows="5"></textarea>
           </div>
           <div class="form-btns">
-            <button>Add Exercise</button>
+            <button type="submit">Add Exercise</button>
             <button id="close">Cancel</button>
           </div>
         </div>
-      </div>
+      </form>
     </section>
     <section class="filters">
       <p></p>
     </section>
-    <div class="all-exercises">
+    <div id="all-exercises">
       <div class="card">
         <ul class="titles">
           <li class="column-title">Name</li>
