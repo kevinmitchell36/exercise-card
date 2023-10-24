@@ -46,16 +46,14 @@ section {
 
 .form-content {
   background-color: rgba(245, 245, 245, 0.868);
-  margin: 30px auto; /* 15% from the top and centered */
+  margin: 30px auto;
   padding: 20px;
   border: 1px solid #888;
-  max-width: 400px; /* Could be more or less, depending on screen size */
-  /* color: #333; */
-
+  max-width: 400px; 
 }
 
 .form-field {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .form-field label {
@@ -82,26 +80,133 @@ section {
 }
 
 
-#all-exercises .card {
-  background-color: white;
-  border-bottom: 1px solid #cfcece
-}
-
-.exercise, .titles {
-  list-style: none;
+.card-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
-.exercise ul {
-  margin-bottom: 0px;
+.card {
+  display: grid;
+  grid-template-areas:
+    'movement splits'
+    'image image'
+    'category setof'
+    'break break'
+    'weight reps'
+    'targets targets'
+    'notes notes'
+    'edit delete';
+  grid-template-rows: 1fr 5fr 1fr 0.5fr;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  width: 390px;
 }
 
-.exercise li {
-  margin-right: 10px;
+#movement { 
+  grid-area: movement;
+  padding-left: 5px;
 }
 
-li:last-child {
-  margin-left: 15px;
+#splits {
+  grid-area: splits;
+  padding-right: 5px;
 }
 
+#image {
+  grid-area: image;
+  width: 100%;
+  height: 100%;
+} 
+
+#category { 
+  grid-area: category;
+  padding-left: 5px;
+  font-size: 0.75rem;
+} 
+
+#setof {
+  grid-area: setof;
+  text-align: right;
+  padding-right: 5px;
+  font-size: 0.75rem;
+} 
+
+.break {
+  grid-area: break;
+  display: flex;
+  justify-content: center;
+}
+
+.line-break {
+  height: 4px;
+  width: 5rem;
+  background: #3457D5;
+  border-radius: 10px;
+}
+ 
+
+.weight {
+  grid-area: weight;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 0rem;
+  margin-top: 10px;
+  transition: box-shadow .3s;
+}
+
+.weight:hover {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.reps {
+  grid-area: reps;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 0rem;
+  margin-top: 10px;
+}
+
+.fa-crosshairs {
+  margin-right: 5px;
+}
+
+#targets {
+  grid-area: targets;
+  
+}
+
+#notes {
+  transition: box-shadow .3s;
+  grid-area: notes;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 10px;
+}
+
+#notes:hover {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+#edit {
+  grid-area: edit;
+  padding-left: 10px;
+}
+
+#delete {
+  grid-area: delete;
+  text-align: right;
+  padding-right: 10px;
+}
+
+small {
+  display: none;
+}
+
+small.show {
+  display: block;
+  color: red;
+}

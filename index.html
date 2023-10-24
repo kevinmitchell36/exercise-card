@@ -28,26 +28,32 @@
           <div class="form-field">
             <label for="movement">Name</label>
             <input type="text" name="name" id="movement">
+            <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
-            <label for="split">Splits</label>
-            <input type="text" name="split" id="split">
+            <label for="splits">Splits</label>
+            <input type="text" name="splits" id="splits">
+            <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
             <label for="targets">Targets</label>
             <input type="text" name="targets" id="targets">
+            <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
             <label for="weight">Weight</label>
             <input type="text" name="weight" id="weight">
+            <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
             <label for="reps">Reps</label>
             <input type="text" name="reps" id="reps">
+            <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
             <label for="notes">Notes</label>
             <textarea name="notes" id="notes" rows="5"></textarea>
+            <small>Field cannot be blank</small>
           </div>
           <div class="form-btns">
             <button type="submit">Add Exercise</button>
@@ -57,39 +63,10 @@
       </form>
     </section>
     <section class="filters">
-      <p></p>
     </section>
-    <div id="all-exercises">
-      <div class="card">
-        <ul class="titles">
-          <li class="column-title">Name</li>
-          <li class="column-title">Splits</li>
-          <li class="column-title">Targets</li>
-          <li class="column-title">Delete</li>
-        </ul>
-      </div>
-      <div class="card">
-        <ul class="exercise">
-          <li>Bench Pec Flys</li>
-          <li>Upper/Push</li>
-          <li>Pecs, front delts, biceps</li>
-          <li>
-            <i class="fa-regular fa-trash-can"></i>
-          </li>
-        </ul>
-      </div>
-      <div class="card">
-        <ul class="exercise">
-          <li>Bench Pec Flys</li>
-          <li>Upper/Push</li>
-          <li>Pecs, front delts, biceps</li>
-          <li>
-            <i class="fa-regular fa-trash-can"></i>
-          </li>
-        </ul>
-      </div>
-      
-    </div>
+    <section id="all-exercises">
+      <!-- Inject Cards Here -->
+    </section>
    </main>
    <script src="script.js"></script>
 </body>
