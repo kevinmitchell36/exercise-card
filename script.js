@@ -27,17 +27,19 @@ function displayCards() {
 }
 
 function getCardsFromStorage(){
-  let itemsFromStorage; 
+  let cardsFromStorage; 
   if (localStorage.getItem('exercises') === null) {
-    itemsFromStorage = [];
+    cardsFromStorage = [];
   } else {
-    itemsFromStorage = JSON.parse(localStorage.getItem('exercises'));
+    cardsFromStorage = JSON.parse(localStorage.getItem('exercises'));
   }
-  return itemsFromStorage
+  return cardsFromStorage
 }
+
 // Form
 function addCard(e) {
   e.preventDefault();
+
   const exercise = {};
   
   const exerciseName = nameInput.value;
@@ -54,8 +56,8 @@ function addCard(e) {
   exercise.notes = exerciseNotes
 
 
+  addCardToStorage(exercise);
   addCardToDOM(exercise);
-  addCardToStorage(exercise)
 }  
 
 function onFocus(e) {
@@ -110,17 +112,19 @@ function addCardToStorage(exercise) {
   localStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
 }
 
-function onDeleteAttempt(e) {
+function onClick(e) {
   if (e.target.parentElement.id === "delete") {
     removeCard(e.target.parentElement.parentElement);
+  } else if (e.target.parentElement.id === "edit") {
+    findCard(e.target.parentElement.parentElement)
   }
+
 }
 
 function removeCard(card) {
   if (confirm('Delete this exercise card?')) {
     card.remove();
     removeCardFromStorage(card.children[0].innerText);
-    clearUI();
   }
 }
 
@@ -128,14 +132,43 @@ function removeCardFromStorage(card) {
   let cardsFromStorage = getCardsFromStorage();
   cardsFromStorage = cardsFromStorage.filter((c) => c.name !== card);
   localStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
+  clearUI();
+}
+
+function findCard(card) {
+  const nameOfCard = card.children[0].innerText;
+  const cardsFromStorage = getCardsFromStorage();
+  const cardToEdit = cardsFromStorage.filter((card) => card.name === nameOfCard)
+  displayModal();
+  editCard(cardToEdit[0]);
+}
+
+function editCard(card) {
+  console.log(card);
+  const inputs = document.getElementsByTagName("input");
+  document.getElementById("movement").value = card.name;
+  document.getElementById("splits").value = card.splits;
+  document.getElementById("targets").value = card.targets;
+  document.getElementById("weight").value = card.weight;
+  document.getElementById("reps").value = card.reps;
+  document.getElementById("notes").value = card.notes;
+  console.log(movement);
+  // for(let i = 0; i < inputs.length; i++) {
+
+  //   console.log(inputs[i].value); 
+  // }
 }
 
 // Modal
-btn.onclick = function() {
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+function displayModal() {
   modal.style.display = "block";
 }
 
-closers.forEach( function(element){
+closers.forEach(function(element){
   element.addEventListener('click', event => {
     if (event.target.id == "close") {
       modal.style.display = "none";
@@ -143,9 +176,23 @@ closers.forEach( function(element){
   })
 });
 
+function searchExercises(e) {
+  const cards = list.querySelectorAll("div.card");
+  const text = e.target.value.toLowerCase();
+  
+  cards.forEach((card) => {
+    const cardName = card.children[0].innerText.toLowerCase();
+    if (cardName.indexOf(text) !== -1) {
+      card.style.display = 'grid'
+    } else {
+      card.style.display = 'none';
+    }
+  })
+}
+
 // Application state
 function clearUI() {
-  const cards = list.querySelectorAll("div.card-container");
+  const cards = list.querySelectorAll("div.card");
   if (cards.length === 0) {
     search.parentElement.style.display = "none";
   } else {
@@ -156,8 +203,11 @@ function clearUI() {
 
 function init() {
   form.addEventListener('submit', addCard);
-  list.addEventListener('click', onDeleteAttempt);
+  list.addEventListener('click', onClick);
+  btn.addEventListener("click", displayModal)
   document.addEventListener('DOMContentLoaded', displayCards);
+  search.addEventListener("input", searchExercises);
+  
   fields.forEach ((e)=> {
     e.addEventListener("mousedown", onFocus);
   })
