@@ -8,6 +8,7 @@ const weightInput = document.getElementById("weight");
 const repsInput = document.getElementById("reps");
 const notesInput = document.getElementById("notes");
 const form = document.getElementById("form");
+let isEditMode = false;
 
 // Page
 const list = document.getElementById("all-exercises");
@@ -16,7 +17,8 @@ const search = document.getElementById("search-bar");
 
 // Modal
 const modal = document.getElementById("form");
-const btn = document.getElementById("add-item");
+const innerModal = document.querySelector(".form-content");
+const addBtn = document.getElementById("add-item");
 const closers = document.querySelectorAll("button#close, i#close");
 const fields = document.querySelectorAll("input");
 
@@ -35,7 +37,6 @@ function getCardsFromStorage(){
   }
   return cardsFromStorage
 }
-
 // Form
 function addCard(e) {
   e.preventDefault();
@@ -166,11 +167,23 @@ function editCard(card) {
 
 function displayModal() {
   modal.style.display = "block";
+  modal.addEventListener("click", outModalClick);
+  innerModal.addEventListener("click", inModalClick);
+  
+}
+
+function outModalClick() {
+  modal.style.display = "none";
+}
+
+function inModalClick(e) {
+  e.stopPropagation();
+  e.stopImmediatePropagation();
 }
 
 closers.forEach(function(element){
   element.addEventListener('click', event => {
-    if (event.target.id == "close") {
+    if (event.target.id === "close") {
       modal.style.display = "none";
     }
   })
@@ -204,7 +217,7 @@ function clearUI() {
 function init() {
   form.addEventListener('submit', addCard);
   list.addEventListener('click', onClick);
-  btn.addEventListener("click", displayModal)
+  addBtn.addEventListener("click", displayModal);
   document.addEventListener('DOMContentLoaded', displayCards);
   search.addEventListener("input", searchExercises);
   
