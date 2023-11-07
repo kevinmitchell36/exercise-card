@@ -21,6 +21,7 @@ const innerModal = document.querySelector(".form-content");
 const addBtn = document.getElementById("add-item");
 const closers = document.querySelectorAll("button#close, i#close");
 const fields = document.querySelectorAll("input");
+let submitBtn = document.querySelector("button[type='submit']");
 
 function displayCards() {
   const cardsFromStorage = getCardsFromStorage();
@@ -40,9 +41,15 @@ function getCardsFromStorage(){
 // Form
 function addCard(e) {
   e.preventDefault();
+  if (isEditMode) {
+    const cardToDelete = list.querySelector(".edit-mode");
+    removeCardFromStorage(cardToDelete.children[0].innerText);
+    cardToDelete.classList.remove("edit-mode");
+    cardToDelete.remove();
+    isEditMode = false;
+  }
 
   const exercise = {};
-  
   const exerciseName = nameInput.value;
   exercise.name = exerciseName;
   const exerciseSplits = splitsInput.value;
@@ -55,7 +62,6 @@ function addCard(e) {
   exercise.reps = exerciseReps;
   const exerciseNotes = notesInput.value;
   exercise.notes = exerciseNotes
-
 
   addCardToStorage(exercise);
   addCardToDOM(exercise);
@@ -123,7 +129,7 @@ function onClick(e) {
 }
 
 function removeCard(card) {
-  if (confirm('Delete this exercise card?')) {
+  if (confirm(`Delete this exercise card?`)) {
     card.remove();
     removeCardFromStorage(card.children[0].innerText);
   }
@@ -137,39 +143,38 @@ function removeCardFromStorage(card) {
 }
 
 function findCard(card) {
+  isEditMode = true;
   const nameOfCard = card.children[0].innerText;
   const cardsFromStorage = getCardsFromStorage();
   const cardToEdit = cardsFromStorage.filter((card) => card.name === nameOfCard)
+  const cardObject = cardToEdit[0]
+  card.classList.add("edit-mode");
   displayModal();
-  editCard(cardToEdit[0]);
+  editCard(cardObject);
 }
 
-function editCard(card) {
-  console.log(card);
+function editCard(cardObject) {
   const inputs = document.getElementsByTagName("input");
-  document.getElementById("movement").value = card.name;
-  document.getElementById("splits").value = card.splits;
-  document.getElementById("targets").value = card.targets;
-  document.getElementById("weight").value = card.weight;
-  document.getElementById("reps").value = card.reps;
-  document.getElementById("notes").value = card.notes;
-  console.log(movement);
-  // for(let i = 0; i < inputs.length; i++) {
-
-  //   console.log(inputs[i].value); 
-  // }
+  document.getElementById("movement").value = cardObject.name;
+  document.getElementById("splits").value = cardObject.splits;
+  document.getElementById("targets").value = cardObject.targets;
+  document.getElementById("weight").value = cardObject.weight;
+  document.getElementById("reps").value = cardObject.reps;
+  document.getElementById("notes").value = cardObject.notes;
 }
-
-// Modal
-// btn.onclick = function() {
-//   modal.style.display = "block";
-// }
 
 function displayModal() {
+  if (isEditMode) {
+    submitBtn.style.backgroundColor = "green";
+    submitBtn.style.color = "white";
+    submitBtn.innerText = "Update Exercise";
+  }
   modal.style.display = "block";
   modal.addEventListener("click", outModalClick);
   innerModal.addEventListener("click", inModalClick);
-  
+  if (isEditMode === false) {
+    form.reset();
+  }
 }
 
 function outModalClick() {
@@ -211,6 +216,11 @@ function clearUI() {
   } else {
     search.parentElement.style.display = "block";
   }
+  modal.style.display = "none";
+  submitBtn.style.color = "black";
+  submitBtn.style.backgroundColor = "#ccc";
+  submitBtn.innerText = "Add Exercise";
+  isEditMode = false;
 }
 // Event Listeners
 
