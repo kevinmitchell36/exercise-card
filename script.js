@@ -21,7 +21,9 @@ const innerModal = document.querySelector(".form-content");
 const addBtn = document.getElementById("add-item");
 const closers = document.querySelectorAll("button#close, i#close");
 const fields = document.querySelectorAll("input");
-let submitBtn = document.querySelector("button[type='submit']");
+const smalls = document.querySelectorAll("small");
+const submitBtn = document.querySelector("button[type='submit']");
+
 
 function displayCards() {
   const cardsFromStorage = getCardsFromStorage();
@@ -41,14 +43,7 @@ function getCardsFromStorage(){
 // Form
 function addCard(e) {
   e.preventDefault();
-  if (isEditMode) {
-    const cardToDelete = list.querySelector(".edit-mode");
-    removeCardFromStorage(cardToDelete.children[0].innerText);
-    cardToDelete.classList.remove("edit-mode");
-    cardToDelete.remove();
-    isEditMode = false;
-  }
-
+  
   const exercise = {};
   const exerciseName = nameInput.value;
   exercise.name = exerciseName;
@@ -62,6 +57,31 @@ function addCard(e) {
   exercise.reps = exerciseReps;
   const exerciseNotes = notesInput.value;
   exercise.notes = exerciseNotes
+  
+  for (const field in exercise) {
+    console.log(typeof(exercise[field]));
+    // console.log(field, exercise[field]);
+    if (exercise[field] === '') {
+      console.log("If triggered?");
+      alert("All fields are required");
+      return;
+    }
+  }
+
+  if (isEditMode) {
+    const cardToDelete = list.querySelector(".edit-mode");
+    removeCardFromStorage(cardToDelete.children[0].innerText);
+    cardToDelete.classList.remove("edit-mode");
+    cardToDelete.remove();
+    isEditMode = false;
+  } else {
+    if (checkDuplicates(exercise.name)) {
+      alert('That exercise already exsits!')
+      return;
+    }
+  }
+
+  
 
   addCardToStorage(exercise);
   addCardToDOM(exercise);
@@ -161,6 +181,11 @@ function editCard(cardObject) {
   document.getElementById("weight").value = cardObject.weight;
   document.getElementById("reps").value = cardObject.reps;
   document.getElementById("notes").value = cardObject.notes;
+}
+
+function checkDuplicates(exerciseName) {
+  const cardsFromStorage = getCardsFromStorage();
+  return cardsFromStorage.some(e => e.name === exerciseName);
 }
 
 function displayModal() {
