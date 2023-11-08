@@ -3,6 +3,7 @@
 // Form
 const nameInput = document.getElementById("movement");
 const splitsInput = document.getElementById("splits");
+const demoInput = document.getElementById("demo");
 const targetsInput = document.getElementById("targets");
 const weightInput = document.getElementById("weight");
 const repsInput = document.getElementById("reps");
@@ -49,6 +50,8 @@ function addCard(e) {
   exercise.name = exerciseName;
   const exerciseSplits = splitsInput.value;
   exercise.splits = exerciseSplits;
+  const exerciseDemo = demoInput.value;
+  exercise.demo = exerciseDemo;
   const exerciseTargets = targetsInput.value;
   exercise.targets = exerciseTargets;
   const exerciseWeight = weightInput.value;
@@ -56,7 +59,7 @@ function addCard(e) {
   const exerciseReps = repsInput.value;
   exercise.reps = exerciseReps;
   const exerciseNotes = notesInput.value;
-  exercise.notes = exerciseNotes
+  exercise.notes = exerciseNotes;
   
   for (const field in exercise) {
     console.log(typeof(exercise[field]));
@@ -81,8 +84,6 @@ function addCard(e) {
     }
   }
 
-  
-
   addCardToStorage(exercise);
   addCardToDOM(exercise);
 }  
@@ -106,7 +107,7 @@ function addCardToDOM(exercise) {
   <div class="card">
     <p id="movement">${exercise.name}</p>
     <p id="splits">${exercise.splits}</p>
-    <iframe src="https://www.youtube.com/embed/UKwkChzThig" id="image"></iframe>
+    <iframe src=${exercise.demo} alt="media not found" id="image"></iframe>
     <p id="category">Fix this later</p>
     <p id="setof">Set 1 of 3</p>
     <div class="break">
