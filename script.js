@@ -10,11 +10,12 @@ const repsInput = document.getElementById("reps");
 const notesInput = document.getElementById("notes");
 const form = document.getElementById("form");
 let isEditMode = false;
+let splitsTag = '';
+let targetsTag = '';
 
 // Page
 const list = document.getElementById("all-exercises");
 const search = document.getElementById("search-bar");
-
 
 // Modal
 const modal = document.getElementById("form");
@@ -24,8 +25,9 @@ const closers = document.querySelectorAll("button#close, i#close");
 const fields = document.querySelectorAll("input");
 const smalls = document.querySelectorAll("small");
 const submitBtn = document.querySelector("button[type='submit']");
+const plusSigns = document.querySelectorAll("i.fa-plus")
 
-
+// Page Load
 function displayCards() {
   const cardsFromStorage = getCardsFromStorage();
   cardsFromStorage.forEach((card) => addCardToDOM(card));
@@ -41,19 +43,30 @@ function getCardsFromStorage(){
   }
   return cardsFromStorage
 }
+
 // Form
 function addCard(e) {
   e.preventDefault();
+
   
   const exercise = {};
+  
   const exerciseName = nameInput.value;
   exercise.name = exerciseName;
-  const exerciseSplits = splitsInput.value;
-  exercise.splits = exerciseSplits;
+
+  const exerciseSplits = []
+  allSplitTags = document.querySelectorAll("li.split-tag");
+  allSplitTags.forEach(tag => exerciseSplits.push(tag.innerText));
+  exercise.splits = exerciseSplits.reverse(); 
+  
   const exerciseDemo = demoInput.value;
   exercise.demo = exerciseDemo;
-  const exerciseTargets = targetsInput.value;
-  exercise.targets = exerciseTargets;
+  
+  const exerciseTargets = [];
+  allTargetTags = document.querySelectorAll("li.target-tag")
+  allTargetTags.forEach(tag => exerciseTargets.push(tag.innerText));
+  exercise.targets = exerciseTargets.reverse();
+  
   const exerciseWeight = weightInput.value;
   exercise.weight = exerciseWeight;
   const exerciseReps = repsInput.value;
@@ -62,10 +75,7 @@ function addCard(e) {
   exercise.notes = exerciseNotes;
   
   for (const field in exercise) {
-    console.log(typeof(exercise[field]));
-    // console.log(field, exercise[field]);
     if (exercise[field] === '') {
-      console.log("If triggered?");
       alert("All fields are required");
       return;
     }
@@ -83,10 +93,33 @@ function addCard(e) {
       return;
     }
   }
-
+  
   addCardToStorage(exercise);
   addCardToDOM(exercise);
 }  
+
+function createTag(e) {
+  let className = ''
+  const text = e.target.value;
+  if (e.target.id === "splits") {
+    className = "split-tag";
+    splitsTag = `<li class="${className}">${text}</li>`;
+  } else {
+    className = "target-tag";
+    targetsTag = `<li class="${className}">${text}</li>`;
+  }
+}
+
+function showTag(e) {
+  console.log("Working?");
+  if (e.target.id === "split-add") {
+    splitsInput.insertAdjacentHTML("afterend", splitsTag);
+    splitsInput.value = '';
+  } else if (e.target.id === "target-add") {
+    targetsInput.insertAdjacentHTML("afterend", targetsTag);
+    targetsInput.value = '';
+  }
+}
 
 function onFocus(e) {
   const small = e.target.parentElement.children[2]
@@ -106,7 +139,7 @@ function addCardToDOM(exercise) {
   const card = `<div class="card-container">
   <div class="card">
     <p id="movement">${exercise.name}</p>
-    <p id="splits">${exercise.splits}</p>
+    <p id="splits">${exercise.splits.join('/')}</p>
     <iframe src=${exercise.demo} alt="media not found" id="image"></iframe>
     <p id="category">Fix this later</p>
     <p id="setof">Set 1 of 3</p>
@@ -140,6 +173,7 @@ function addCardToStorage(exercise) {
   localStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
 }
 
+// Delete/Edit
 function onClick(e) {
   if (e.target.parentElement.id === "delete") {
     removeCard(e.target.parentElement.parentElement);
@@ -149,6 +183,7 @@ function onClick(e) {
 
 }
 
+// Delete
 function removeCard(card) {
   if (confirm(`Delete this exercise card?`)) {
     card.remove();
@@ -163,6 +198,7 @@ function removeCardFromStorage(card) {
   clearUI();
 }
 
+// Edit
 function findCard(card) {
   isEditMode = true;
   const nameOfCard = card.children[0].innerText;
@@ -184,11 +220,13 @@ function editCard(cardObject) {
   document.getElementById("notes").value = cardObject.notes;
 }
 
+// Local Storage Duplicates
 function checkDuplicates(exerciseName) {
   const cardsFromStorage = getCardsFromStorage();
   return cardsFromStorage.some(e => e.name === exerciseName);
 }
 
+// Modal
 function displayModal() {
   if (isEditMode) {
     submitBtn.style.backgroundColor = "green";
@@ -200,6 +238,8 @@ function displayModal() {
   innerModal.addEventListener("click", inModalClick);
   if (isEditMode === false) {
     form.reset();
+    const canceledTags = document.querySelectorAll("li.tag");
+    canceledTags.forEach(li => li.remove());
   }
 }
 
@@ -212,14 +252,7 @@ function inModalClick(e) {
   e.stopImmediatePropagation();
 }
 
-closers.forEach(function(element){
-  element.addEventListener('click', event => {
-    if (event.target.id === "close") {
-      modal.style.display = "none";
-    }
-  })
-});
-
+// Search
 function searchExercises(e) {
   const cards = list.querySelectorAll("div.card");
   const text = e.target.value.toLowerCase();
@@ -248,10 +281,12 @@ function clearUI() {
   submitBtn.innerText = "Add Exercise";
   isEditMode = false;
 }
-// Event Listeners
 
+// Event Listeners
 function init() {
   form.addEventListener('submit', addCard);
+  splitsInput.addEventListener("input", createTag);
+  targetsInput.addEventListener("input", createTag);
   list.addEventListener('click', onClick);
   addBtn.addEventListener("click", displayModal);
   document.addEventListener('DOMContentLoaded', displayCards);
@@ -260,6 +295,19 @@ function init() {
   fields.forEach ((e)=> {
     e.addEventListener("mousedown", onFocus);
   })
+
+  plusSigns.forEach(plus => {
+    plus.addEventListener("click", showTag);
+  })
+
+  closers.forEach(closer => {
+    closer.addEventListener('click', event => {
+      if (event.target.id === "close") {
+        modal.style.display = "none";
+      }
+    })
+  });
+
   clearUI();
 }
 
