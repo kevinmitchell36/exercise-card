@@ -111,6 +111,7 @@ section {
   border-radius: 5px;
   margin-top: 5px;
   text-align: left;
+  margin-bottom: 8px;
 }
 
 .form-field input:hover, textarea:hover {
@@ -125,15 +126,26 @@ section {
 .float {
   position: absolute;
   right: 10px;
-  top: calc(60%);
+  top: 45px;
   background-color: #14279B;
   color: white;
   cursor: pointer;
 }
 
+li {
+  display: inline;
+  background-color: #1482D0;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
 label[for="targets"] {
   padding-right: 90px;
 }
+
+
 
 
 #all-exercises {

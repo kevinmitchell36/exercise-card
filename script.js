@@ -3,12 +3,16 @@
 // Form
 const nameInput = document.getElementById("movement");
 const splitsInput = document.getElementById("splits");
+const splitsContainer = document.getElementById("splits-container");
 const demoInput = document.getElementById("demo");
 const targetsInput = document.getElementById("targets");
+const targetsContainer = document.getElementById("targets-container");
 const weightInput = document.getElementById("weight");
 const repsInput = document.getElementById("reps");
 const notesInput = document.getElementById("notes");
 const form = document.getElementById("form");
+
+
 let isEditMode = false;
 let splitsTag = '';
 let targetsTag = '';
@@ -21,9 +25,8 @@ const search = document.getElementById("search-bar");
 const modal = document.getElementById("form");
 const innerModal = document.querySelector(".form-content");
 const addBtn = document.getElementById("add-item");
-const closers = document.querySelectorAll("button#close, i#close");
+const closeBtn = document.getElementById("close");
 const fields = document.querySelectorAll("input");
-const smalls = document.querySelectorAll("small");
 const submitBtn = document.querySelector("button[type='submit']");
 const plusSigns = document.querySelectorAll("i.fa-plus")
 
@@ -112,23 +115,35 @@ function createTag(e) {
 
 function showTag(e) {
   if (e.target.id === "split-add") {
-    splitsInput.insertAdjacentHTML("afterend", splitsTag);
+    splitsContainer.insertAdjacentHTML("afterend", splitsTag);
     splitsInput.value = '';
   } else if (e.target.id === "target-add") {
-    targetsInput.insertAdjacentHTML("afterend", targetsTag);
+    targetsContainer.insertAdjacentHTML("afterend", targetsTag);
     targetsInput.value = '';
   }
+  const tags = document.querySelectorAll('li');
+  tags.forEach((tag) => {
+    tag.addEventListener("dblclick", deleteTag);
+  })
+}
+
+function deleteTag(e) {
+  e.target.remove();
 }
 
 function onFocus(e) {
-  const small = e.target.parentElement.children[2]
-  small.classList.remove("show");
   const field = e.target.parentElement;
   field.addEventListener("focusout", warning);
 }
 
 function warning(e) {
-  const small = e.target.parentElement.children[2]
+  let child 
+  if (e.target.parentElement.children.length == 3) {
+    child = 2
+  } else {
+    child = 3
+  }
+  const small = e.target.parentElement.children[child]
   if (e.target.value === "") {
     small.classList.add("show");
   } 
@@ -237,6 +252,18 @@ function displayModal() {
 
 function outModalClick() {
   modal.style.display = "none";
+  refreshForm();
+}
+
+function refreshForm() {
+  const smalls = document.querySelectorAll('small');
+  smalls.forEach((small) => {
+    small.classList.remove("show");
+  })
+  const tags = document.querySelectorAll('li');
+  tags.forEach((tag) => {
+    tag.remove();
+  })
 }
 
 function inModalClick(e) {
@@ -283,22 +310,15 @@ function init() {
   addBtn.addEventListener("click", displayModal);
   document.addEventListener('DOMContentLoaded', displayCards);
   search.addEventListener("input", searchExercises);
+  closeBtn.addEventListener("click", outModalClick);
   
-  fields.forEach ((e)=> {
+  fields.forEach((e) => {
     e.addEventListener("mousedown", onFocus);
   })
 
   plusSigns.forEach(plus => {
     plus.addEventListener("click", showTag);
   })
-
-  closers.forEach(closer => {
-    closer.addEventListener('click', event => {
-      if (event.target.id === "close") {
-        modal.style.display = "none";
-      }
-    })
-  });
 
   clearUI();
 }
