@@ -8,20 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/3ffbf38ede.js" crossorigin="anonymous"></script>
-  <title>All exercises</title>
+  <title>Exercise Cards</title>
 </head>
 <body>
-   <nav>
-    <h1>exciting nav bar</h1>
-   </nav>
-   <main class="container">
+  <main class="container">
+     <h1>Start Adding Your Exercises</h1>
+     <button class="button-15" role="button"><i class="fa-solid fa-plus fa-2xl" id="add-item"></i></button>
     <section class="search">
       <input type="text" id="search-bar" placeholder="Search" >
     </section>
     <section class="add-button">
-      <button id="add-item">
-        Add Exercise
-      </button>
       <form id="form" class="modal">
         <div class="form-content">
           <div class="form-field">
@@ -29,10 +25,10 @@
             <input type="text" name="name" id="movement">
             <small>Field cannot be blank</small>
           </div>
-          <div class="form-field">
+          <div class="form-field float-plus">
             <label for="splits">Splits</label>
             <input type="text" name="splits" id="splits">
-            <i class="fa-solid fa-plus" id="split-add"></i>
+            <i class="fa-solid fa-plus float" id="split-add"></i>
             <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
@@ -40,10 +36,10 @@
             <input type="text" name="demo" id="demo">
             <small>Field cannot be blank</small>
           </div>
-          <div class="form-field">
+          <div class="form-field float-plus">
             <label for="targets">Targets</label>
             <input type="text" name="targets" id="targets">
-            <i class="fa-solid fa-plus" id="target-add"></i>
+            <i class="fa-solid fa-plus float" id="target-add"></i>
             <small>Field cannot be blank</small>
           </div>
           <div class="form-field">
@@ -67,8 +63,6 @@
           </div>
         </div>
       </form>
-    </section>
-    <section class="filters">
     </section>
     <section id="all-exercises">
       <!-- Inject Cards Here -->

@@ -111,7 +111,6 @@ function createTag(e) {
 }
 
 function showTag(e) {
-  console.log("Working?");
   if (e.target.id === "split-add") {
     splitsInput.insertAdjacentHTML("afterend", splitsTag);
     splitsInput.value = '';
@@ -138,23 +137,18 @@ function warning(e) {
 function addCardToDOM(exercise) {
   const card = `<div class="card-container">
   <div class="card">
-    <p id="movement">${exercise.name}</p>
-    <p id="splits">${exercise.splits.join('/')}</p>
-    <iframe src=${exercise.demo} alt="media not found" id="image"></iframe>
-    <p id="category">Fix this later</p>
-    <p id="setof">Set 1 of 3</p>
-    <div class="break">
-      <div class="line-break"></div>
-    </div>
-    <div class="weight">
+    <p id="card-movement">${exercise.name}</p>
+    <p id="card-splits">${exercise.splits.join('/')}</p>
+    <iframe src=${exercise.demo} alt="media not found" id="card-image"></iframe>
+    <div id="card-weight">
       <i class="fa fa-dumbbell"></i>
       <p id="number">${exercise.weight}</p>
     </div>
-    <div class="reps">
+    <div id="card-reps">
       <i class="fa fa-repeat"></i>
       <p id="reps">${exercise.reps}</p>
     </div>
-    <p id="targets"><i class="fa fa-crosshairs"></i>${exercise.targets}</p>
+    <p id="card-targets"><i class="fa fa-crosshairs"></i>${exercise.targets}</p>
     <p id="notes">${exercise.notes}</p>
     <p id="edit"><i class="fa fa-pencil"></i></p>
     <p id="delete"><i class="fa fa-trash"></i></p>
@@ -238,8 +232,6 @@ function displayModal() {
   innerModal.addEventListener("click", inModalClick);
   if (isEditMode === false) {
     form.reset();
-    const canceledTags = document.querySelectorAll("li.tag");
-    canceledTags.forEach(li => li.remove());
   }
 }
 

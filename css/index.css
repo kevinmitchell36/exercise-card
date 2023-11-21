@@ -7,11 +7,54 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.25)
+  ),
+  url('/assets/images/danielle-cerullo-CQfNt66ttZM-unsplash.jpg');
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
+h1 { 
+  font-size: 50px;
+  color: white;
+  margin: 30px auto;
+}
+
+/* CSS */
+.button-15 {
+  background-image: linear-gradient(#14279B, #3D56B2);
+  border: 1px solid #5C7AEA;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  direction: ltr;
+  display: block;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -.022em;
+  line-height: 1.47059;
+  min-width: 30px;
+  overflow: visible;
+  padding: 4px 15px;
+  text-align: center;
+  vertical-align: baseline;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-15:hover {
+  background-image: linear-gradient(#E6E6E6, #5C7AEA);
+  border-color: #1482D0;
+  text-decoration: none;
+}
 
 .container {
-  max-width: 500px;
+  /* max-width: 500px; */
   margin: 30px auto;
   padding: 20px;
   display: flex;
@@ -45,10 +88,10 @@ section {
 } 
 
 .form-content {
-  background-color: rgba(245, 245, 245, 0.868);
+  background-color: #3D56B2;
   margin: 30px auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid #14279B;
   max-width: 400px; 
 }
 
@@ -58,28 +101,49 @@ section {
 
 .form-field label {
   display: block;
+  color: white;
 }
 
 .form-field input, textarea {
   width: 100%;
   padding: 5px;
-  border: #929191 2px solid;
+  border: black 1px solid;
   border-radius: 5px;
   margin-top: 5px;
+  text-align: left;
 }
 
-.filters {
-  display: flex;
+.form-field input:hover, textarea:hover {
+  border: 2px solid #14279B;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
 }
+
+.float-plus {
+  position: relative;
+}
+
+.float {
+  position: absolute;
+  right: 10px;
+  top: calc(60%);
+  background-color: #14279B;
+  color: white;
+  cursor: pointer;
+}
+
+label[for="targets"] {
+  padding-right: 90px;
+}
+
 
 #all-exercises {
   display: flex;
-  flex-direction: column;
-  background-color: rgb(248, 243, 235);
+  flex-direction: row;
   padding: 20px 5px;
 }
 
 
+/* Cards */
 .card-container {
   display: flex;
   justify-content: center;
@@ -87,66 +151,39 @@ section {
 }
 
 .card {
+  background-color: white;
   display: grid;
   grid-template-areas:
-    'movement splits'
-    'image image'
-    'category setof'
-    'break break'
-    'weight reps'
-    'targets targets'
-    'notes notes'
+    'movement card-splits'
+    'card-image card-image'
+    'card-weight card-reps'
+    'card-targets card-targets'
+    'card-notes card-notes'
     'edit delete';
-  grid-template-rows: 1fr 5fr 1fr 0.5fr;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  grid-template-rows: 1fr 5fr;
   width: 390px;
 }
 
-#movement { 
+#card-movement { 
   grid-area: movement;
   padding-left: 5px;
 }
 
-#splits {
-  grid-area: splits;
+#card-splits {
+  grid-area: card-splits;
   padding-right: 5px;
+  text-align: right;
 }
 
-#image {
-  grid-area: image;
+#card-image {
+  grid-area: card-image;
   width: 100%;
   height: 100%;
+  border: none;
 } 
 
-#category { 
-  grid-area: category;
-  padding-left: 5px;
-  font-size: 0.75rem;
-} 
-
-#setof {
-  grid-area: setof;
-  text-align: right;
-  padding-right: 5px;
-  font-size: 0.75rem;
-} 
-
-.break {
-  grid-area: break;
-  display: flex;
-  justify-content: center;
-}
-
-.line-break {
-  height: 4px;
-  width: 5rem;
-  background: #3457D5;
-  border-radius: 10px;
-}
- 
-
-.weight {
-  grid-area: weight;
+#card-weight {
+  grid-area: card-weight;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -156,12 +193,8 @@ section {
   transition: box-shadow .3s;
 }
 
-.weight:hover {
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-}
-
-.reps {
-  grid-area: reps;
+#card-reps {
+  grid-area: card-reps;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,21 +207,17 @@ section {
   margin-right: 5px;
 }
 
-#targets {
-  grid-area: targets;
-  
+#card-targets {
+  grid-area: card-targets;
+  margin-left: 10px;
 }
 
-#notes {
+#card-notes {
   transition: box-shadow .3s;
   grid-area: notes;
   max-width: 100%;
   max-height: 100%;
   padding: 10px;
-}
-
-#notes:hover {
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 #edit {
