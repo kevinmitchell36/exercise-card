@@ -50,7 +50,6 @@ function getCardsFromStorage(){
 // Form
 function addCard(e) {
   e.preventDefault();
-
   
   const exercise = {};
   
@@ -62,8 +61,9 @@ function addCard(e) {
   allSplitTags.forEach(tag => exerciseSplits.push(tag.innerText));
   exercise.splits = exerciseSplits.reverse(); 
   
+
   const exerciseDemo = demoInput.value;
-  exercise.demo = exerciseDemo;
+  exercise.demo = embedLink(exerciseDemo);
   
   const exerciseTargets = [];
   allTargetTags = document.querySelectorAll("li.target-tag")
@@ -101,6 +101,12 @@ function addCard(e) {
   addCardToDOM(exercise);
 }  
 
+function embedLink(url) {
+  const videoId = url.split("v=")[1];
+  const videoString = `https://www.youtube.com/embed/${videoId}`;
+  return videoString;
+}
+
 function createTag(e) {
   let className = ''
   const text = e.target.value;
@@ -132,6 +138,9 @@ function deleteTag(e) {
 }
 
 function onFocus(e) {
+  const length = e.target.parentElement.children.length - 1;
+  const small = e.target.parentElement.children[length];
+  small.classList.remove("show");
   const field = e.target.parentElement;
   field.addEventListener("focusout", warning);
 }
@@ -144,9 +153,11 @@ function warning(e) {
     child = 3
   }
   const small = e.target.parentElement.children[child]
-  if (e.target.value === "") {
+  if (child === 2 && e.target.value === "") {
     small.classList.add("show");
-  } 
+  } else if (child === 3 && e.target.value === "" && (splitsTag === null || targetsTag === null) ) {
+    small.classList.add("show");
+  }
 }
 
 function addCardToDOM(exercise) {
@@ -164,7 +175,7 @@ function addCardToDOM(exercise) {
       <p id="reps">${exercise.reps}</p>
     </div>
     <p id="card-targets"><i class="fa fa-crosshairs"></i>${exercise.targets}</p>
-    <p id="notes">${exercise.notes}</p>
+    <p id="card-notes">${exercise.notes}</p>
     <p id="edit"><i class="fa fa-pencil"></i></p>
     <p id="delete"><i class="fa fa-trash"></i></p>
   </div>
@@ -223,6 +234,7 @@ function editCard(cardObject) {
   const inputs = document.getElementsByTagName("input");
   document.getElementById("movement").value = cardObject.name;
   document.getElementById("splits").value = cardObject.splits;
+  document.getElementById("demo").value = cardObject.demo;
   document.getElementById("targets").value = cardObject.targets;
   document.getElementById("weight").value = cardObject.weight;
   document.getElementById("reps").value = cardObject.reps;
@@ -238,8 +250,6 @@ function checkDuplicates(exerciseName) {
 // Modal
 function displayModal() {
   if (isEditMode) {
-    submitBtn.style.backgroundColor = "green";
-    submitBtn.style.color = "white";
     submitBtn.innerText = "Update Exercise";
   }
   modal.style.display = "block";
@@ -295,10 +305,9 @@ function clearUI() {
     search.parentElement.style.display = "block";
   }
   modal.style.display = "none";
-  submitBtn.style.color = "black";
-  submitBtn.style.backgroundColor = "#ccc";
   submitBtn.innerText = "Add Exercise";
   isEditMode = false;
+  refreshForm();
 }
 
 // Event Listeners
