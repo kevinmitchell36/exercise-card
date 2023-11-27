@@ -26,7 +26,7 @@ const modal = document.getElementById("form");
 const innerModal = document.querySelector(".form-content");
 const addBtn = document.getElementById("add-item");
 const closeBtn = document.getElementById("close");
-const fields = document.querySelectorAll("input");
+const fields = document.querySelectorAll("input:not(#search-bar)");
 const submitBtn = document.querySelector("button[type='submit']");
 const plusSigns = document.querySelectorAll("i.fa-plus")
 
@@ -39,10 +39,10 @@ function displayCards() {
 
 function getCardsFromStorage(){
   let cardsFromStorage; 
-  if (localStorage.getItem('exercises') === null) {
+  if (sessionStorage.getItem('exercises') === null) {
     cardsFromStorage = [];
   } else {
-    cardsFromStorage = JSON.parse(localStorage.getItem('exercises'));
+    cardsFromStorage = JSON.parse(sessionStorage.getItem('exercises'));
   }
   return cardsFromStorage
 }
@@ -138,11 +138,41 @@ function deleteTag(e) {
 }
 
 function onFocus(e) {
+  checkPreviousFields(e);
   const length = e.target.parentElement.children.length - 1;
   const small = e.target.parentElement.children[length];
   small.classList.remove("show");
   const field = e.target.parentElement;
   field.addEventListener("focusout", warning);
+}
+
+function checkPreviousFields(e) {
+  const fieldsArray = (Array.from(fields));
+  const fieldsNames = fieldsArray.map((field) => field.name);
+  const fieldName = e.target.name;
+  const indexPosition = fieldsNames.indexOf(fieldName);
+  for (let i = indexPosition - 1; i >= 0; i--) {
+    let fieldId = "#" + fieldsNames[i];
+    let fieldValue = document.querySelector(fieldId).value;
+    const parent = document.getElementById(fieldsNames[i]).parentElement;
+    const inputName = parent.querySelector("input").name;
+    let splitField = inputName === "splits" ? true : false;
+    let targetField = inputName === "targets" ? true : false;
+    const small = parent.querySelector("small");
+    if (!fieldValue && splitField) {
+      const tagList = (document.getElementsByClassName("split-tag"));
+      if (tagList.length === 0)  {
+        small.classList.add("show");
+      }
+    } else if (!fieldValue && targetField) {
+      const tagList = (document.getElementsByClassName("target-tag"));
+      if (tagList.length === 0)  {
+        small.classList.add("show");
+      }  
+    } else if (!fieldValue) {
+      small.classList.add("show");
+    }
+  }
 }
 
 function warning(e) {
@@ -190,7 +220,7 @@ clearUI();
 function addCardToStorage(exercise) {
   const cardsFromStorage = getCardsFromStorage();
   cardsFromStorage.push(exercise);
-  localStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
+  sessionStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
 }
 
 // Delete/Edit
@@ -214,7 +244,7 @@ function removeCard(card) {
 function removeCardFromStorage(card) {
   let cardsFromStorage = getCardsFromStorage();
   cardsFromStorage = cardsFromStorage.filter((c) => c.name !== card);
-  localStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
+  sessionStorage.setItem('exercises', JSON.stringify(cardsFromStorage));
   clearUI();
 }
 
